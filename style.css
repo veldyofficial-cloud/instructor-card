@@ -1,0 +1,18 @@
+@font-face { font-family: "Love Rose"; src: url("fonts/LoveRose.otf") format("opentype"); }
+* { box-sizing: border-box; }
+body { margin: 0; background: #f4f6fb; font-family: "Pretendard", "Malgun Gothic", sans-serif; color: #1a1a2e; }
+main { max-width: 760px; margin: 0 auto; padding: 32px 16px 64px; }
+h1 { margin: 0 0 4px; }
+.sub { margin: 0 0 24px; color: #667; }
+.panel { background: #fff; border-radius: 12px; padding: 20px; margin-bottom: 16px; box-shadow: 0 2px 8px rgba(0,0,0,.06); }
+label { font-weight: 600; display: block; margin-bottom: 8px; }
+label span { font-weight: 400; color: #889; font-size: 13px; }
+textarea { width: 100%; font-size: 18px; padding: 10px; border: 1px solid #ccd; border-radius: 8px; resize: vertical; }
+.note { color: #b45309; font-size: 13px; margin: 8px 0 0; }
+canvas { width: 100%; height: auto; border-radius: 8px; display: block; }
+#tabs { display: flex; gap: 6px; flex-wrap: wrap; margin: 12px 0; }
+#tabs button { background: #eef; color: #0063ff; border: 0; padding: 6px 12px; border-radius: 16px; cursor: pointer; }
+#tabs button.on { background: #0063ff; color: #fff; }
+.buttons { display: flex; gap: 8px; flex-wrap: wrap; }
+.buttons button { background: #0063ff; color: #fff; border: 0; padding: 10px 18px; border-radius: 8px; font-size: 15px; cursor: pointer; }
+.buttons button:hover { background: #004fd0; }
