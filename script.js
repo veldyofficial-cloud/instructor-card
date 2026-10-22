@@ -39,7 +39,7 @@ function draw(c, name) {
 function update() { draw(canvas, nameEl.value.trim()); }
 nameEl.addEventListener('input', update);
 
-const fileName = () => (nameEl.value.trim() || 'card').replace(/[\/:*?"<>|]/g, '_');
+const fileName = () => (nameEl.value.trim() || 'card').replace(/[\\/:*?"<>|]/g, '_');
 function save(blob, name) {
   const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; a.click();
   setTimeout(() => URL.revokeObjectURL(a.href), 1000);
