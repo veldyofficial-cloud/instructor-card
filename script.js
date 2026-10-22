@@ -2,7 +2,7 @@
 const W = 1063, H = 591;
 const NAME_X = 83;          // 이름 왼쪽 시작 x
 const NAME_BOX = { top: 290, bottom: 420, maxW: 330 };  // 이름이 들어갈 영역
-const NAME_SIZE = 80;       // 기본 글자 크기(px) — 영역을 넘으면 자동 축소
+const NAME_SIZE = 128;      // 기본 글자 크기(px) — 영역을 넘으면 자동 축소
 const FONT = '"Love Rose", cursive';
 
 const canvas = document.getElementById('card');
