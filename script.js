@@ -7,11 +7,8 @@ const FONT = '"Love Rose", cursive';
 
 const canvas = document.getElementById('card');
 const ctx = canvas.getContext('2d');
-const namesEl = document.getElementById('names');
-const preview = document.getElementById('preview');
-const tabs = document.getElementById('tabs');
-const zipBtn = document.getElementById('zip');
-let template, names = [], current = 0;
+const nameEl = document.getElementById('name');
+let template;
 
 const loadImage = src => new Promise((res, rej) => {
   const img = new Image(); img.onload = () => res(img); img.onerror = rej; img.src = src;
@@ -39,43 +36,22 @@ function draw(c, name) {
   g.fillText(name, NAME_X, mid + (asc - desc) / 2);
 }
 
-function update() {
-  names = namesEl.value.split('\n').map(s => s.trim()).filter(Boolean);
-  preview.hidden = names.length === 0;
-  if (current >= names.length) current = 0;
-  tabs.innerHTML = '';
-  if (names.length > 1) names.forEach((n, i) => {
-    const b = document.createElement('button');
-    b.textContent = n; b.className = i === current ? 'on' : '';
-    b.onclick = () => { current = i; update(); };
-    tabs.appendChild(b);
-  });
-  zipBtn.hidden = names.length < 2;
-  draw(canvas, names[current] || '');
-}
-namesEl.addEventListener('input', update);
+function update() { draw(canvas, nameEl.value.trim()); }
+nameEl.addEventListener('input', update);
 
-const fileName = n => n.replace(/[\/:*?"<>|]/g, '_');
-const toBlob = c => new Promise(r => c.toBlob(r, 'image/png'));
+const fileName = () => (nameEl.value.trim() || 'card').replace(/[\/:*?"<>|]/g, '_');
 function save(blob, name) {
   const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; a.click();
   setTimeout(() => URL.revokeObjectURL(a.href), 1000);
 }
 
-document.getElementById('png').onclick = async () => save(await toBlob(canvas), fileName(names[current]) + '.png');
+document.getElementById('png').onclick = () => canvas.toBlob(b => save(b, fileName() + '.png'));
 
 document.getElementById('pdf').onclick = () => {
   // 명함 규격 90×50mm
   const pdf = new jspdf.jsPDF({ orientation: 'landscape', unit: 'mm', format: [90, 50.03] });
   pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, 90, 50.03);
-  pdf.save(fileName(names[current]) + '.pdf');
-};
-
-zipBtn.onclick = async () => {
-  const zip = new JSZip(), tmp = document.createElement('canvas');
-  tmp.width = W; tmp.height = H;
-  for (const n of names) { draw(tmp, n); zip.file(fileName(n) + '.png', await toBlob(tmp)); }
-  save(await zip.generateAsync({ type: 'blob' }), 'business-cards.zip');
+  pdf.save(fileName() + '.pdf');
 };
 
 init();
